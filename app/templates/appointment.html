@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Запись на приём{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="text-center mb-4">Запись на приём</h2>
+
+                <form method="post" action="/appointments/create">
+
+                    <div class="mb-3">
+                        <label class="form-label">Услуга</label>
+                        <select class="form-select" id="service_id" name="service_id" required>
+                            <option disabled selected>Выберите услугу</option>
+                            {% for service in services %}
+                                <option value="{{ service.id }}" data-spec="{{ service.specialization_id }}">
+                                    {{ service.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Врач</label>
+                        <select class="form-select" id="doctor_id" name="doctor_id" disabled required>
+                            <option disabled selected>Выберите врача</option>
+                        </select>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label class="form-label">Дата</label>
+                        <input type="date" class="form-control" id="date" name="date" required disabled>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Время</label>
+                        <select class="form-select" id="time" name="time" required disabled>
+                            <option disabled selected>Выберите время</option>
+                        </select>
+                    </div>
+
+                    <input type="hidden" name="user_id" value="{{ request.state.user.id }}">
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Записаться</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', path='js/appointments.js') }}"></script>
+{% endblock %}
+

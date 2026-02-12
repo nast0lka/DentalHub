@@ -1,0 +1,26 @@
+/* Профиль пользователя */
+.profile-card {
+    border-radius: 12px;
+}
+
+/* Аватар */
+.avatar img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+/* Раздел "Мои записи" */
+.section-title {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.appointment-card {
+    border-left: 4px solid #0d6efd;
+    transition: transform 0.2s;
+}
+
+.appointment-card:hover {
+    transform: scale(1.02);
+}

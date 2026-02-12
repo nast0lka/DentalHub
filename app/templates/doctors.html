@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center mb-4">Наши врачи</h1>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for doctor in doctors %}
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <img
+                    src="{{ doctor.photo }}"
+                    class="card-img-top"
+                    alt="{{ doctor.name }} {{ doctor.lastname }}"
+                    style="object-fit: cover; height: 300px;"
+                >
+
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {{ doctor.name }} {{ doctor.lastname }}
+                    </h5>
+
+                    <p class="card-text mb-1">
+                        <strong>Специализация:</strong>
+                        {% for spec in specializations %}
+                            {% if doctor.specialization_id == spec.id %}
+                                {{ spec.name }}
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+
+                    <p class="card-text mb-1">
+                        <strong>Стаж:</strong>
+                        {{ doctor.experience }} лет
+                    </p>
+
+                    <p class="card-text">
+                        <strong>Образование:</strong>
+                        {{ doctor.education }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

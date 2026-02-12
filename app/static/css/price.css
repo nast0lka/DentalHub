@@ -1,0 +1,21 @@
+.section-title {
+    font-weight: 600;
+    color: #2c3e50;
+    border-bottom: 2px solid #0d6efd;
+    display: inline-block;
+    padding-bottom: 8px;
+}
+
+.price-table th {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.price-table td {
+    font-size: 1rem;
+    color: #2c3e50;
+}
+
+.price-table tr:hover {
+    background-color: rgba(13, 110, 253, 0.1);
+}

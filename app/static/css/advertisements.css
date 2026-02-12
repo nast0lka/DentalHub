@@ -1,0 +1,118 @@
+.cards {
+    display: grid;
+    grid-template-rows: 1fr;
+    gap: 10px;
+    padding: 10px 0;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.card {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    border: 2px solid #CBD0E2;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: #ffffff;
+    gap: 20px;
+}
+
+.room-image {
+    width: 250px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.details {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+}
+
+.inf{
+    background-color: #e2e4f0;
+    border-radius: 10px;
+    padding: 0 10px;
+    display: inline-block;
+}
+
+.info1 {
+    font-size: 24px;
+    margin: 0;
+    font-weight: bold;
+}
+
+.info2 {
+    font-size: 16px;
+    margin: 0;
+    color: #464646;
+}
+
+.info3 {
+    font-size: 16px;
+    margin: 0;
+    color: #B4B3B4;
+}
+
+.info4 {
+    font-size: 20px;
+    margin: 0;
+    font-weight: 600;
+    padding: 5px;
+    color: #2a2733;
+    display: inline-block;
+}
+
+.info5 {
+    font-size: 20px;
+    margin: 0;
+    font-weight: 600;
+    color: #36343e;
+}
+
+.control {
+    margin-top: auto;
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    background-color: #3470BF;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.btn:hover {
+    background-color: #285a96;
+}
+
+.add-room{
+    width: 90%;
+    margin: 0 auto;
+    padding: 10px 10px 0 0;
+}
+
+.btn-add {
+    display: inline-block;
+    background-color: #3470BF;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-add:hover {
+    background-color: #285a95;
+}
