@@ -1,9 +1,25 @@
 from datetime import date
-from fastapi import APIRouter, Depends, Request
+import hashlib
+from typing import Any, Callable, Dict, Optional, Tuple
+from fastapi import APIRouter, Depends, Request, Response
+from fastapi_cache.decorator import cache
+from pydantic import parse_obj_as
 
 from app.doctors.dao import DoctorDAO
 from app.doctors.models import Doctor
-from app.doctors.schemas import DoctorBase
+from app.doctors.schemas import DoctorBase, DoctorInf
+
+def custom_key_builder(
+    func: Callable[..., Any],
+    namespace: str = "",
+    *,
+    request: Optional[Request] = None,
+    response: Optional[Response] = None,
+    args: Tuple[Any, ...],
+    kwargs: Dict[str, Any],
+) -> str:
+    cache_key = hashlib.md5(f"{func.__name__}:{args}:{kwargs}".encode()).hexdigest()
+    return f"{namespace}:{cache_key}"
 
 router_doctor = APIRouter(
     prefix="/doctors",
@@ -15,16 +31,10 @@ router_doctor = APIRouter(
 async def get_doctors(request: Request):
     return await DoctorDAO.find_all()
 
-@router_doctor.get("/by-specialization/{specialization_id}")
-async def doctors_by_specialization(specialization_id: int):
-    doctors = await DoctorDAO.get_doctor_by_specialization(specialization_id)
-    return [
-        {
-            "id": d.id,
-            "name": f"{d.name} {d.lastname}"
-        }
-        for d in doctors
-    ]
+@router_doctor.get("/by-specialization/{specialization_id}", response_model=list[DoctorInf])
+@cache(expire=100, key_builder=custom_key_builder)
+async def doctors_by_specialization(specialization_id: int, request: Request):
+    return await DoctorDAO.get_doctor_by_specialization(specialization_id)
 
 @router_doctor.get("/{doctor_id}/occupied-slots")
 async def occupied_slots(doctor_id: int, date: date):

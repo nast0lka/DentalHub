@@ -44,4 +44,11 @@ class DoctorForm(BaseModel):
             dentistry_id=dentistry_id
         )
     
+
+class DoctorInf(BaseModel):
+    id: int
+    name: str
+    lastname: str
     
+    class Config:
+        from_orm = True

@@ -3,6 +3,7 @@ from fastapi import APIRouter, Depends, Request
 
 from app.specializations.models import Specialization
 from app.specializations.dao import SpecializationDAO
+from app.specializations.schemas import SpecializationBase
 
 router_specialization = APIRouter(
     prefix="/specializations",
@@ -11,5 +12,5 @@ router_specialization = APIRouter(
 
 
 @router_specialization.get("")
-async def get_specializations(request: Request):
+async def get_specializations() -> list[SpecializationBase]:
     return await SpecializationDAO.find_all()
