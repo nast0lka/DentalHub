@@ -9,7 +9,11 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <h2 class="text-center mb-4">Вход</h2>
-
+                {% if registration_sent %}
+                <div class="alert alert-success" role="alert">
+                    Мы отправили письмо с ссылкой для подтверждения регистрации. Проверьте почту.
+                </div>
+                {% endif %}
             <form method="post" action="/auth/login">
                 <div class="mb-3">
                     <label for="email" class="form-label">Почта</label>

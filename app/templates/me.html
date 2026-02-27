@@ -20,6 +20,12 @@
                 <a href="/admin" class="btn btn-outline-secondary w-100">Панель администратора</a>
                 <a href="/admin/form_doctor" class="btn btn-outline-secondary w-100">Добавить врача</a>
             {% endif %}
+            {% if not user.is_verified %}
+                <div class="card-body text-center">
+                    <p class="text-muted mb-1">Ваше почта не подтверждена</p>
+                    <a href="/auth/resend-confirmation" class="btn btn-outline-secondary w-100">Отправить письмо повторно</a>.
+                </div>
+            {% endif %}
         </div>
     </div>
 

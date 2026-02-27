@@ -1,13 +1,13 @@
-from datetime import date
 import hashlib
+from datetime import date
 from typing import Any, Callable, Dict, Optional, Tuple
-from fastapi import APIRouter, Depends, Request, Response
+
+from fastapi import APIRouter, Request, Response
 from fastapi_cache.decorator import cache
-from pydantic import parse_obj_as
 
 from app.doctors.dao import DoctorDAO
-from app.doctors.models import Doctor
-from app.doctors.schemas import DoctorBase, DoctorInf
+from app.doctors.schemas import DoctorInf
+
 
 def custom_key_builder(
     func: Callable[..., Any],

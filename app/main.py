@@ -1,38 +1,34 @@
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
-from fastapi import APIRouter, FastAPI, Request
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from sqladmin import Admin
-from app.users.auth import get_current_user
-from app.users.auth import AddUserToContextMiddleware
-from fastapi.responses import HTMLResponse
-from app.database import engine
-from app.config import settings
-
-from app.admin.auth import authentication_backend
-from app.admin.view import AppointmentAdmin, DoctorAdmin, ServiceAdmin, UserAdmin
-
-from app.doctors.models import Doctor
-from app.appointments.models import Appointment
-from app.users.models import User
-from app.services.models import Service
-from app.dentistry.models import Dentistry
-from app.specializations.models import Specialization
-
-from app.pages.router import router_main
-from app.users.router import router_auth
-from app.doctors.router import router_doctor
-from app.appointments.router import router_appointment
-from app.admin_func.router import router_admin
-
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
-from fastapi_cache.decorator import cache
-
-from redis import asyncio as aioredis
 from redis.asyncio import Redis
+from sqladmin import Admin
+
+from app.admin.auth import authentication_backend
+from app.admin.view import (AppointmentAdmin, 
+                            DoctorAdmin, 
+                            ServiceAdmin,
+                            UserAdmin)
+from app.admin_func.router import router_admin
+from app.appointments.models import Appointment
+from app.appointments.router import router_appointment
+from app.config import settings
+from app.database import engine
+from app.dentistry.models import Dentistry
+from app.doctors.models import Doctor
+from app.doctors.router import router_doctor
+from app.pages.router import router_main
+from app.services.models import Service
+from app.specializations.models import Specialization
+from app.users.auth import AddUserToContextMiddleware
+from app.users.models import User
+from app.users.router import router_auth
+
 
 @asynccontextmanager
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:
@@ -77,3 +73,5 @@ admin.add_view(UserAdmin)
 admin.add_view(AppointmentAdmin)
 admin.add_view(DoctorAdmin)
 admin.add_view(ServiceAdmin)
+
+

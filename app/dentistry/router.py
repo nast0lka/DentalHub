@@ -1,5 +1,4 @@
-from fastapi import APIRouter, BackgroundTasks, Depends
-from pydantic import parse_obj_as
+from fastapi import APIRouter
 
 from app.dentistry.dao import DentistryDAO
 from app.dentistry.schemas import DentistryBase

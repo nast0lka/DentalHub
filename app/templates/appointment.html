@@ -45,9 +45,15 @@
 
                     <input type="hidden" name="user_id" value="{{ request.state.user.id }}">
 
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">Записаться</button>
-                    </div>
+                    {% if not request.state.user.is_verified %}
+                        <div class="alert alert-warning" role="alert">
+                            Пожалуйста, подтвердите ваш email перед записью на приём.
+                        </div>
+                    {% else %}
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Записаться</button>
+                        </div>
+                    {% endif %}
                 </form>
 
             </div>

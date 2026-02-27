@@ -1,7 +1,8 @@
+from datetime import date
+
 from fastapi.params import Form
 from pydantic import BaseModel, EmailStr
-from datetime import date
-from typing import Optional
+
 
 
 class UserBase(BaseModel):

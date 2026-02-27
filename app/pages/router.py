@@ -1,13 +1,12 @@
 from fastapi import APIRouter, Depends, Request
-from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
+from app.appointments.router import get_user_appointments
 from app.dentistry.router import get_dentistry
 from app.doctors.router import get_doctors
 from app.services.router import get_services
 from app.specializations.router import get_specializations
 from app.users.auth import get_current_user
-from app.appointments.router import get_user_appointments
 
 templates = Jinja2Templates(directory="app/templates")
 
@@ -72,7 +71,11 @@ async def get_register_page(request: Request):
 
 @router_main.get("/login")
 async def get_login_page(request: Request):
-    return templates.TemplateResponse("auth/login.html", {"request": request})
+    registration_sent = request.cookies.get("registration_sent")
+    resp = templates.TemplateResponse("auth/login.html", {"request": request, "registration_sent": registration_sent})
+    if registration_sent:
+        resp.delete_cookie("registration_sent")
+    return resp
 
 @router_main.get("/profile")
 async def get_profile_page(

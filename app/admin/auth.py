@@ -2,7 +2,9 @@ from sqladmin import Admin
 from sqladmin.authentication import AuthenticationBackend
 from starlette.requests import Request
 from starlette.responses import RedirectResponse
-from app.users.auth import authenticate_user, create_access_token, get_current_user, get_user_from_session
+
+from app.users.auth import (authenticate_user, get_user_from_session)
+from app.users.token import create_access_token, create_refresh_token
 
 
 class AdminAuth(AuthenticationBackend):
@@ -14,7 +16,8 @@ class AdminAuth(AuthenticationBackend):
 
         if user:
             access_token = create_access_token({"sub": str(user.id)})
-            request.session.update({"token": access_token})
+            refresh_token = create_refresh_token({"sub": str(user.id)})
+            request.session.update({"token": access_token, "refresh_token": refresh_token})
             return True
 
     async def logout(self, request: Request) -> bool:

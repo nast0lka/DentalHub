@@ -1,17 +1,16 @@
-from datetime import datetime, timedelta
 from http.client import HTTPException
-from starlette.middleware.base import BaseHTTPMiddleware
 
 from argon2 import verify_password
-from fastapi import Request, HTTPException, status, Depends
-
-from jose import ExpiredSignatureError, JWTError, jwt
+from fastapi import Depends, HTTPException, Request, status
+from jose import JWTError, jwt
 from passlib.context import CryptContext
 from pydantic import EmailStr
+from starlette.middleware.base import BaseHTTPMiddleware
 
 from app.config import settings
 from app.users.dao import UserDAO
 from app.users.models import User
+from app.users.token import decode_token
 
 pwd_context = CryptContext(
     schemes=["argon2"],
@@ -26,14 +25,7 @@ def get_password_hash(password: str) -> str:
 def verify_password(plain_password, hashed_password) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
 
-def create_access_token(data: dict) -> str:
-    to_encode = data.copy()
-    expire = datetime.utcnow() + timedelta(minutes=30)
-    to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(
-        to_encode, settings.SECRET_KEY, settings.ALGORITHM
-    )
-    return encoded_jwt
+
 
 async def authenticate_user(email: EmailStr, password: str):
     user = await UserDAO.find_one_or_none(email=email)
@@ -46,7 +38,7 @@ async def get_current_user(request: Request):
     if not token:
         return None
     try:
-        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
+        payload = decode_token(token, expected_type="access")
         user_id = int(payload.get("sub"))
         user = await UserDAO.find_one_or_none(id=user_id)
         return user
@@ -64,7 +56,7 @@ async def get_user_from_session(request: Request):
     token = request.session.get("token")
     if not token:
         return None
-
+    
     try:
         payload = jwt.decode(
             token,

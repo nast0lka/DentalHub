@@ -1,8 +1,8 @@
-from sqlalchemy import Column, Date, Integer, String, Boolean
+from sqlalchemy import Boolean, Column, Date, Integer, String
 from sqlalchemy.orm import relationship
 
-
 from app.database import Base
+
 
 class User(Base):
     __tablename__ = "users"
@@ -15,6 +15,7 @@ class User(Base):
     password_hash = Column(String, nullable=False)
 
     is_admin = Column(Boolean, default=False)
+    is_verified = Column(Boolean, default=False)
 
     appointments = relationship("Appointment", back_populates="user")
 

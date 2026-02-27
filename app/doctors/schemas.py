@@ -1,7 +1,6 @@
 from fastapi import UploadFile
-from pydantic import BaseModel
-from typing import Optional
 from fastapi.params import File, Form
+from pydantic import BaseModel
 
 
 class DoctorBase(BaseModel):

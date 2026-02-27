@@ -1,10 +1,9 @@
 from sqladmin import ModelView
+
 from app.appointments.models import Appointment
 from app.doctors.models import Doctor
 from app.services.models import Service
 from app.users.models import User
-from markupsafe import Markup
-from fastapi import Request
 
 
 class UserAdmin(ModelView, model=User):

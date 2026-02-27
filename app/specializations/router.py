@@ -1,7 +1,7 @@
 from datetime import date
-from fastapi import APIRouter, Depends, Request
 
-from app.specializations.models import Specialization
+from fastapi import APIRouter
+
 from app.specializations.dao import SpecializationDAO
 from app.specializations.schemas import SpecializationBase
 

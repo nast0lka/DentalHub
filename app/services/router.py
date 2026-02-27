@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter
 
 from app.services.dao import ServicesDAO
 from app.services.models import Service

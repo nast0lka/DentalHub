@@ -1,14 +1,10 @@
-from datetime import date, datetime
-from time import time
 from fastapi import APIRouter, Depends, Request
 from fastapi.responses import RedirectResponse
-
-from app.users.auth import get_current_user
-from app.appointments.schemas import AppointmentBase
-from app.appointments.dao import AppointmentDAO
-from app.appointments.models import Appointment
-
 from starlette.status import HTTP_303_SEE_OTHER
+
+from app.appointments.dao import AppointmentDAO
+from app.appointments.schemas import AppointmentBase
+from app.users.auth import get_current_user
 
 router_appointment = APIRouter(
     prefix="/appointments",
@@ -35,7 +31,10 @@ async def create_appointment(
     return RedirectResponse("/", status_code=303)
 
 @router_appointment.get("/my-appointments")
-async def get_user_appointments(user=Depends(get_current_user)):
+async def get_user_appointments(request: Request):
+    user = await get_current_user(request)
+    if not user:
+        return RedirectResponse("/auth/login", status_code=HTTP_303_SEE_OTHER)
     appointments = await AppointmentDAO.find_all_by_user(user.id)
     return appointments
 

@@ -1,5 +1,6 @@
 from asyncio.log import logger
-from sqlalchemy import delete, insert, select
+
+from sqlalchemy import delete, insert, select, update
 from sqlalchemy.exc import SQLAlchemyError
 
 from app.database import async_session_maker
@@ -45,5 +46,16 @@ class BaseDAO:
             
             logger.error(msg, extra={"table": cls.model.__tablename__}, exc_info=True)
             return None
+        
+    @classmethod
+    async def update(cls, user_id: int, **values):
+        async with async_session_maker() as session:
+            stmt = (update(cls.model)
+                .where(cls.model.id == user_id)
+                .values(**values)
+                .execution_options(synchronize_session="fetch")
+            )
+            await session.execute(stmt)
+            await session.commit()
 
     

@@ -1,6 +1,7 @@
-from sqlalchemy import Column, Date, Integer, String, ForeignKey, Time
-from app.database import Base
+from sqlalchemy import Column, Date, ForeignKey, Integer, Time
 from sqlalchemy.orm import relationship
+
+from app.database import Base
 
 
 class Appointment(Base):

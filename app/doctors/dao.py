@@ -1,9 +1,12 @@
 from datetime import datetime
+
+from sqlalchemy import select
+
 from app.appointments.models import Appointment
 from app.dao.base import BaseDAO
-from app.doctors.models import Doctor
 from app.database import async_session_maker
-from sqlalchemy import and_, func, insert, or_, select
+from app.doctors.models import Doctor
+
 
 class DoctorDAO(BaseDAO):
     model = Doctor

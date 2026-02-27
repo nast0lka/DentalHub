@@ -1,9 +1,11 @@
-from app.dao.base import BaseDAO
-from app.appointments.models import Appointment
-from app.users.dao import UserDAO
-from app.database import async_session_maker
-from sqlalchemy import and_, func, insert, or_, select
+from sqlalchemy import select
 from sqlalchemy.orm import selectinload
+
+from app.appointments.models import Appointment
+from app.dao.base import BaseDAO
+from app.database import async_session_maker
+from app.users.dao import UserDAO
+
 
 class AppointmentDAO(BaseDAO):
     model = Appointment

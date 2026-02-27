@@ -1,6 +1,7 @@
 from app.dao.base import BaseDAO
-from app.users.models import User
 from app.database import async_session_maker
+from app.users.models import User
+
 
 class UserDAO(BaseDAO):
     model = User
@@ -14,3 +15,4 @@ class UserDAO(BaseDAO):
             await session.commit()
             await session.refresh(user)
             return user
+        

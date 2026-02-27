@@ -1,12 +1,9 @@
+from datetime import date, datetime, time
+
+from fastapi import Form
 from fastapi.params import Form
 from pydantic import BaseModel
-from datetime import date, time
-from typing import Optional
 
-
-from pydantic import BaseModel
-from fastapi import Form
-from datetime import datetime, date, time
 
 class AppointmentBase(BaseModel):
     date: date

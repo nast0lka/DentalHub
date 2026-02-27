@@ -1,18 +1,15 @@
-from fastapi import APIRouter, Depends, Request
-from fastapi.responses import RedirectResponse, HTMLResponse
-from fastapi.templating import Jinja2Templates
 from pathlib import Path
-import os
+
+from fastapi import APIRouter, Depends, Request
+from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.templating import Jinja2Templates
 
 from app.users.auth import admin_required
 from app.users.models import User
-
-templates = Jinja2Templates(directory="app/templates")
-
-from starlette.status import HTTP_303_SEE_OTHER
-
 from app.doctors.dao import DoctorDAO
 from app.doctors.schemas import DoctorForm
+
+templates = Jinja2Templates(directory="app/templates")
 
 router_admin = APIRouter(
     prefix="/admin",

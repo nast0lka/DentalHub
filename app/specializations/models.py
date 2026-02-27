@@ -1,6 +1,7 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
-from app.database import Base
+from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
+
+from app.database import Base
 
 
 class Specialization(Base):
