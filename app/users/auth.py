@@ -1,4 +1,6 @@
 from http.client import HTTPException
+from fastapi import HTTPException
+from fastapi.responses import RedirectResponse
 
 from argon2 import verify_password
 from fastapi import Depends, HTTPException, Request, status
@@ -33,17 +35,20 @@ async def authenticate_user(email: EmailStr, password: str):
         raise Exception("Invalid email or password")
     return user
 
+
 async def get_current_user(request: Request):
     token = request.cookies.get("access_token")
     if not token:
-        return None
+        return RedirectResponse(url="/auth/login", status_code=302)
     try:
         payload = decode_token(token, expected_type="access")
         user_id = int(payload.get("sub"))
         user = await UserDAO.find_one_or_none(id=user_id)
+        if not user:                                                 
+            return RedirectResponse(url="/auth/login", status_code=302)
         return user
     except Exception:
-        return None
+        return RedirectResponse(url="/auth/login", status_code=302)
     
 class AddUserToContextMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
